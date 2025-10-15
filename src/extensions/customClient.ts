@@ -97,7 +97,7 @@ export class CustomClient extends Client {
             this.on(event.event, event.run);
         });
 
-        this.on('ready', () => {
+        this.on('clientReady', () => {
             const commands = this.commands.map(
                 command => command as ApplicationCommandDataResolvable
             );

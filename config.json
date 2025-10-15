@@ -1,6 +1,14 @@
 {
-  "guildId": "1079125191621365842",
+  "guildId": "1428039747103756388",
   "prefix": "!",
+  "activities": [
+    "lolowicz",
+    "with code",
+    "with discord.js",
+    "with web panel",
+    "boczekxd",
+    "fexland"
+  ],
   "features": {
     "commands": true,
     "messageCommands": true,

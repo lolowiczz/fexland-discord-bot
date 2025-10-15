@@ -1,5 +1,6 @@
 import {
     ChannelSelectMenuInteraction,
+    ChatInputCommandInteraction,
     CommandInteractionOptionResolver,
     RoleSelectMenuInteraction,
     StringSelectMenuInteraction,
@@ -13,9 +14,8 @@ import client from '..';
 export default new Event('interactionCreate', async interaction => {
     if (interaction.isCommand()) {
         const command = client.commands.get(interaction.commandName);
-        if (!command) return await interaction.followUp("`❌` The command doesn't exist!");
         command.run({
-            args: interaction.options as CommandInteractionOptionResolver,
+            args: (interaction as ChatInputCommandInteraction).options as CommandInteractionOptionResolver,
             client,
             interaction: interaction as ExtendedInteraction,
         });
