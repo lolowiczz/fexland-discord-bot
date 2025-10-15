@@ -18,7 +18,6 @@ import {
     ModalType,
     SelectMenuType,
 } from '../constants/interactions';
-import { HelpService } from '../services';
 import { Logger } from '../services/logger';
 import config from '../../config.json';
 
@@ -30,7 +29,6 @@ export class CustomClient extends Client {
     selectMenus: Collection<string, SelectMenuType> = new Collection();
     modals: Collection<string, ModalType> = new Collection();
     messageCommands: Collection<string, MessageCommandType> = new Collection();
-    helpService = new HelpService(this, 5);
     config = config;
 
     constructor() {
@@ -105,7 +103,6 @@ export class CustomClient extends Client {
                 commands: commands,
                 guildId: config.guildId,
             });
-            this.helpService.syncPagesLocally();
             Logger.info(`Logged in as ${this.user?.tag}`);
         });
     }

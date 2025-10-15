@@ -80,7 +80,6 @@ async function start(): Promise<void> {
     process.exit(1);
   }
 }
-
 start();
 
 export default client;
