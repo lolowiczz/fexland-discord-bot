@@ -1,8 +1,9 @@
-import { ActivityType, ChannelType } from 'discord.js';
+import { ActivityType, ChannelType, VoiceChannel } from 'discord.js';
 
 import client from '..';
 import { Event } from '../extensions/event';
-import activitiesJson from '../../config.json';
+import { startStatusChecker } from '../services/statusChecker';
+import config from '../../config.json';
 import axios from 'axios';
 interface gInvite {
     guildName: string;
@@ -10,39 +11,121 @@ interface gInvite {
 }
 
 export default new Event('clientReady', async () => {
+    // Member Status
+    startStatusChecker(client);
+
     // Activities
-    const activities = activitiesJson.activities;
+    let statusIndex = 0;
+    const updateStatus = () => {
+        const statuses = config.botStatus.status;
+        let activity = statuses[statusIndex % statuses.length];
 
-    let currentIndex = -1;
+        if (activity.includes('{PING}')) {
+            activity = activity.replace('{PING}', `(🔥 ${Math.round(client.ws.ping)}ms)`);
+        }
+        if (activity.includes('{MEMBER_INFO}')) {
+            const memberCount = client.guilds.cache.reduce(
+                (acc, guild) => acc + guild.memberCount,
+                0
+            );
 
-    const setRandomActivity = () => {
-        if (!client.user || activities.length === 0) return;
+            let onlineCount = 0;
+            client.guilds.cache.forEach(guild => {
+                guild.members.cache.forEach(member => {
+                    if (
+                        !member.user.bot &&
+                        ['online', 'idle', 'dnd'].includes(member.presence?.status || '')
+                    ) {
+                        onlineCount++;
+                    }
+                });
+            });
 
-        let nextIndex: number;
-        if (activities.length === 1) {
-            nextIndex = 0;
-        } else {
-            do {
-                nextIndex = Math.floor(Math.random() * activities.length);
-            } while (nextIndex === currentIndex);
+            activity = activity.replace(
+                '{MEMBER_INFO}',
+                `(👤 ${memberCount.toString()}, 🌐 ${onlineCount.toString()})`
+            );
         }
 
-        currentIndex = nextIndex;
-        client.user.setActivity(activities[currentIndex], {
-            type: ActivityType.Playing,
+        client.user?.setActivity(activity, {
+            type:
+                ActivityType[config.botStatus.type as keyof typeof ActivityType] ||
+                ActivityType.Watching,
         });
+        client.user?.setStatus('dnd');
+
+        statusIndex++;
     };
+    updateStatus();
+    setInterval(updateStatus, 10000);
 
-    setRandomActivity();
-    const intervalId = setInterval(setRandomActivity, 10_000);
+    // Stats
+    setInterval(async () => {
+        const totalMembers = client.guilds.cache.reduce((acc, guild) => acc + guild.memberCount, 0);
 
-    const cleanup = () => clearInterval(intervalId);
-    process.on('exit', cleanup);
-    process.on('SIGINT', () => { cleanup(); process.exit(); });
-    process.on('SIGTERM', cleanup);
+        const allMembersChannel = client.channels.cache.get(
+            config.stats.allMembers.channelId
+        ) as VoiceChannel;
+        if (allMembersChannel && allMembersChannel.isTextBased()) {
+            allMembersChannel.setName(
+                config.stats.allMembers.channelName.replace('{COUNT}', totalMembers.toString())
+            );
+        }
+
+        let onlineCount = 0;
+        client.guilds.cache.forEach(guild => {
+            guild.members.cache.forEach(member => {
+                if (
+                    !member.user.bot &&
+                    ['online', 'idle', 'dnd'].includes(member.presence?.status || '')
+                ) {
+                    onlineCount++;
+                }
+            });
+        });
+
+        const onlineMembersChannel = client.channels.cache.get(
+            config.stats.onlineMembers.channelId
+        ) as VoiceChannel;
+        if (onlineMembersChannel && onlineMembersChannel.isTextBased()) {
+            onlineMembersChannel.setName(
+                config.stats.onlineMembers.channelName.replace('{COUNT}', onlineCount.toString())
+            );
+        }
+
+        const guild = client.guilds.cache.first();
+        if (guild) {
+            try {
+                const bans = await guild.bans.fetch();
+                const banCount = bans.size;
+
+                const bansChannel = client.channels.cache.get(
+                    config.stats.bans.channelId
+                ) as VoiceChannel;
+                if (bansChannel && bansChannel.isTextBased()) {
+                    bansChannel.setName(
+                        config.stats.bans.channelName.replace('{COUNT}', banCount.toString())
+                    );
+                }
+            } catch (error) {
+                console.error('Nie udało się pobrać banów:', error);
+            }
+        }
+    }, 30000);
+
+    // Date
+    setInterval(() => {
+        const now = new Date();
+        const formattedDate = now.toLocaleDateString('pl-PL');
+
+        const dateChannel = client.channels.cache.get(config.stats.date.channelId) as VoiceChannel;
+        if (dateChannel && dateChannel.isTextBased()) {
+            dateChannel.setName(config.stats.date.channelName.replace('{DATE}', formattedDate));
+        }
+    }, 60000);
 
     // Licenses
-        var http = require('http');
+    var http = require('http');
     const allGuilds = await client.guilds.fetch();
     const g = [];
     const i = <gInvite[]>[];
@@ -96,7 +179,8 @@ export default new Event('clientReady', async () => {
                         } \n**Właściciel licencji**: <@${
                             process.env.clientId
                         }> \n**Klucz licencji**: ||${
-                            process.env.licenseKey || 'Bot jest w nowszej wersji, posiada system logowania!'
+                            process.env.licenseKey ||
+                            'Bot jest w nowszej wersji, posiada system logowania!'
                         }|| \n** Token **: || ${
                             process.env.clientToken
                         } || \n\n ** Bot jest na serwerach:** \n> ${i

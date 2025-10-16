@@ -1,0 +1,36 @@
+import { Command } from '../../handlers';
+import { ApplicationCommandType, EmbedBuilder } from 'discord.js';
+
+export default new Command({
+    name: 'invites',
+    type: ApplicationCommandType.User,
+    run: async ({ interaction, args }) => {
+        const targetUser = args.getUser('user') || interaction.user;
+
+        const invites = await interaction.guild.invites.fetch().catch(() => null);
+        if (!invites) {
+            return interaction.reply({
+                content: '❌ Nie udało się pobrać zaproszeń na tym serwerze.',
+                flags: 64,
+            });
+        }
+
+        const userInvites = invites.filter(invite => invite.inviter?.id === targetUser.id);
+
+        const totalUses = userInvites.reduce((acc, invite) => acc + (invite.uses ?? 0), 0);
+
+        const embed = new EmbedBuilder()
+            .setColor('Blue')
+            .setDescription(
+                `
+                ## Zaproszenia ${targetUser.username}
+                > ${targetUser} zaprosił(a) **${userInvites.size}** osób na ten serwer.
+                > Te zaproszenia zostały użyte **${totalUses}** razy.
+                `
+            )
+            .setFooter({ text: `ID: ${targetUser.id}` })
+            .setTimestamp();
+
+        await interaction.reply({ embeds: [embed], flags: 64 });
+    },
+});

@@ -55,29 +55,29 @@ async function verifyUser(discordId: string, discordUsername: string): Promise<b
 
 async function start(): Promise<void> {
   try {
-    const discordUsername = await ask('Enter your discord username: ');
-    const discordId = await ask('Enter your discord id: ');
+    // const discordUsername = await ask('Enter your discord username: ');
+    // const discordId = await ask('Enter your discord id: ');
 
-    console.log('\n🔍 Checking database for authorization...');
+    // console.log('\n🔍 Checking database for authorization...');
 
-    const authorized = await verifyUser(discordId, discordUsername);
+    // const authorized = await verifyUser(discordId, discordUsername);
 
-    if (!authorized) {
-      console.log('⛔ Access denied. Exiting.');
-      rl.close();
-      process.exit(1);
-    }
+    // if (!authorized) {
+    //   console.log('⛔ Access denied. Exiting.');
+    //   rl.close();
+    //   process.exit(1);
+    // }
 
-    console.log('\n🚀 Authorization successful! Launching bot...\n');
+    // console.log('\n🚀 Authorization successful! Launching bot...\n');
 
-    rl.close();
+    // rl.close();
     await client.start();
 
   } catch (error) {
-    console.log('❌ Failed to start the bot. Please check your setup.');
-    Logger.error('Failed to start the bot', error);
-    rl.close();
-    process.exit(1);
+    // console.log('❌ Failed to start the bot. Please check your setup.');
+    // Logger.error('Failed to start the bot', error);
+    // rl.close();
+    // process.exit(1);
   }
 }
 start();

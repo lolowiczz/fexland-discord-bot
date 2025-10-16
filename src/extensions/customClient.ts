@@ -35,11 +35,24 @@ export class CustomClient extends Client {
         super({
             intents: [
                 GatewayIntentBits.Guilds,
-                GatewayIntentBits.MessageContent,
                 GatewayIntentBits.GuildMessages,
+                GatewayIntentBits.MessageContent,
+                GatewayIntentBits.GuildVoiceStates,
                 GatewayIntentBits.GuildMembers,
+                GatewayIntentBits.GuildMessageReactions,
+                GatewayIntentBits.GuildPresences,
+                GatewayIntentBits.DirectMessages,
+                GatewayIntentBits.GuildPresences,
+                GatewayIntentBits.GuildIntegrations,
+                GatewayIntentBits.GuildScheduledEvents,
+                GatewayIntentBits.GuildInvites,
             ],
-            partials: [Partials.Message, Partials.User, Partials.Channel, Partials.GuildMember],
+            partials: [
+                Partials.Channel,
+                Partials.Message,
+                Partials.User,
+                Partials.GuildMember
+        ],
         });
     }
 

@@ -1,19 +1,53 @@
 {
-  "guildId": "1428039747103756388",
-  "prefix": "!",
-  "activities": [
-    "lolowicz",
-    "with code",
-    "with discord.js",
-    "with web panel",
-    "boczekxd",
-    "fexland"
-  ],
-  "features": {
-    "commands": true,
-    "messageCommands": true,
-    "buttons": true,
-    "selectMenus": true,
-    "modals": true
-  }
+    "guildId": "1428039747103756388",
+    "prefix": "!",
+    "channels": {
+        "welcomeChannel": "1428465114234753094",
+        "leaveChannel": "1428465114234753094",
+        "logChannel": "1428465226793226292"
+    },
+    "welcomeRoles": ["1428465929830006934"],
+    "adminsInfo": ["1428465929830006934"],
+    "permissions": {
+        "ban": "1428465929830006934",
+        "kick": "1428465929830006934"
+    },
+    "botStatus": {
+        "type": "Watching",
+        "status": ["{MEMBER_INFO}", "codelaunch.cloud", "lolowicz", "{PING}"]
+    },
+    "statusCheck": {
+        "roleId": "1428481443582971994",
+        "statusKeyword": "codelaunch.cloud",
+        "intervalMinutes": 0.1
+    },
+    "stats": {
+        "allMembers": {
+            "channelId": "1428465522844106883",
+            "channelName": "👤 Osoby: {COUNT}"
+        },
+        "onlineMembers": {
+            "channelId": "1428465588954730566",
+            "channelName": "🟢 Online: {COUNT}"
+        },
+        "lastMember": {
+            "channelId": "1428465627198128208",
+            "channelName": "👤 Ostatni: {USERNAME}"
+        },
+        "date": {
+            "channelId": "1428465703618478120",
+            "channelName": "📅 Data: {DATE}"
+        },
+        "bans": {
+            "channelId": "1428465745494544478",
+            "channelName": "⛔ Bany: {COUNT}"
+        }
+    },
+    "features": {
+        "commands": true,
+        "messageCommands": true,
+        "buttons": true,
+        "selectMenus": true,
+        "modals": true
+    }
 }
