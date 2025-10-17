@@ -1,9 +1,0 @@
-import { Button } from '../handlers';
-import { EmbedBuilder } from 'discord.js';
-
-export default new Button({
-    custom_id: 'example',
-    run: async ({ interaction, client, args }) => {
-        
-    },
-});

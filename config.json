@@ -4,7 +4,8 @@
     "channels": {
         "welcomeChannel": "1428465114234753094",
         "leaveChannel": "1428465114234753094",
-        "logChannel": "1428465226793226292"
+        "logChannel": "1428465226793226292",
+        "ticketPanelChannel": "1428830689444237472"
     },
     "welcomeRoles": ["1428465929830006934"],
     "adminsInfo": ["1428465929830006934"],
@@ -20,6 +21,10 @@
         "roleId": "1428481443582971994",
         "statusKeyword": "codelaunch.cloud",
         "intervalMinutes": 0.1
+    },
+    "tickets": {
+        "categoryId": "1428832545897840690",
+        "teamRoleId": "1428833753152884847"
     },
     "stats": {
         "allMembers": {
