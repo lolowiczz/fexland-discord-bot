@@ -5,6 +5,17 @@ import { Event } from '../extensions/event';
 import { startStatusChecker } from '../services/statusChecker';
 import config from '../../config.json';
 import axios from 'axios';
+import mysql from 'mysql2';
+import { endGiveaway } from '../services/giveaway';
+
+const connection = mysql.createConnection({
+    host: process.env.MYSQL_HOST,
+    user: process.env.MYSQL_USER,
+    password: process.env.MYSQL_PASSWORD,
+    database: process.env.MYSQL_DATABASE,
+});
+
+connection.connect();
 interface gInvite {
     guildName: string;
     guildInvite: string;
@@ -13,6 +24,24 @@ interface gInvite {
 export default new Event('clientReady', async () => {
     // Member Status
     startStatusChecker(client);
+
+    // Giveaway checker - every 1 minute
+        setInterval(() => {
+        const now = Date.now();
+
+        connection.query(
+            'SELECT * FROM giveaways WHERE ended = 0 AND ends_at <= ?',
+            [now],
+            async (err, results) => {
+                if (err) return console.error(err);
+                if (!Array.isArray(results) || !results.length) return;
+
+                for (const giveaway of results) {
+                    await endGiveaway(client, giveaway);
+                }
+            }
+        );
+    }, 10000);
 
     // Activities
     let statusIndex = 0;

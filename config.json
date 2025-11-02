@@ -5,7 +5,22 @@
         "welcomeChannel": "1428465114234753094",
         "leaveChannel": "1428465114234753094",
         "logChannel": "1428465226793226292",
-        "ticketPanelChannel": "1428830689444237472"
+        "ticketPanelChannel": "1428830689444237472",
+        "levelUpChannel": "1432779779068924038",
+        "dailyQuestionChannel": "1432779815127224522",
+        "boostChannel": "1432780627999985767",
+        "wordGameChannel": "1432780879142322337",
+        "antylinkChannels": ["1428041433587257446"],
+        "storyChannel": "1432788273851273317",
+        "autoChannel": "1434643814693470319",
+        "partnershipChannel": "1434650178228457502"
+    },
+    "roles": {
+        "sendCommand": "1428465929830006934",
+        "giveaway": {
+            "boosterRole": "1428465929830006934",
+            "premiumRole": "1428833753152884847"
+        }
     },
     "welcomeRoles": ["1428465929830006934"],
     "adminsInfo": ["1428465929830006934"],
@@ -48,11 +63,50 @@
             "channelName": "⛔ Bany: {COUNT}"
         }
     },
+    "partnerMessage": "Czy chcesz zawrzeć partnerstwo? \n> **tak** / **nie**",
+        "autoBlockDMs": {
+        "enabled": true,
+        "phrases": ["nie chcę otrzymywać", "nie chce otrzymywac", "nie chce", "stop"],
+        "replyAdded": "Zrozumiano. Nie będziesz już otrzymywać wiadomości.",
+        "replyExists": "Już jesteś na liście wykluczonych odbiorców."
+    },
+        "partnerEmbed": {
+        "title": "📢 Nasza reklama",
+        "description": "🚀 Dołącz do **CodeLaunch** – przestrzeni dla pasjonatów programowania i technologii! 💻\n\nChcesz rozwijać swoje umiejętności, dzielić się projektami i poznawać ludzi o podobnych zainteresowaniach?\nTo miejsce jest dla Ciebie! 🌐\n\n💡 Codzienne dyskusje o frontendzie, backendzie, AI, DevOps i nie tylko\n👨‍💻 Pomoc techniczna i code review od społeczności\n📚 Zasoby do nauki i ciekawe artykuły\n📈 Wspólne projekty open-source\n🎤 Wydarzenia, Q&A, konkursy i hackathony\n\n🟢 Niezależnie od poziomu – od początkującego do eksperta – znajdziesz coś dla siebie!\n\n📩 Dołącz już teraz: https://discord.gg/TwojLink",
+        "color": "Blue",
+        "footer": "Pamiętaj, aby przestrzegać zasad serwera!"
+    },
+    "levels": {
+        "roles": {
+            "firstLevel": "1330936144564850768",
+            "fifthLevel": "1330935891358777395",
+            "tenthLevel": "1330936144564850768",
+            "fifteenthLevel": "1330936144564850768",
+            "twentiethLevel": "1330936144564850768",
+            "twentyFifthLevel": "1330936144564850768",
+            "thirtiethLevel": "1330936144564850768",
+            "thirtyFifthLevel": "1330936144564850768",
+            "fortiethLevel": "1330936144564850768",
+            "fortyFifthLevel": "1330936144564850768",
+            "fiftiethLevel": "1330936144564850768",
+            "fiftyFifthLevel": "1330936144564850768",
+            "sixtiethLevel": "1330936144564850768",
+            "sixtyFifthLevel": "1330936144564850768",
+            "seventiethLevel": "1330936144564850768",
+            "seventyFifthLevel": "1330936144564850768",
+            "eightiethLevel": "1330936144564850768",
+            "eightyFifthLevel": "1330936144564850768",
+            "ninetiethLevel": "1330936144564850768",
+            "ninetyFifthLevel": "1330936144564850768",
+            "hundredthLevel": "1330936144564850768"
+        }
+    },
     "features": {
         "commands": true,
         "messageCommands": true,
         "buttons": true,
         "selectMenus": true,
-        "modals": true
+        "modals": true,
+        "autoBlockDMs": true
     }
 }
